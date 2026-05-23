@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRECEPTEUR — Soutien scolaire personnalisé à domicile en Guinée</title>
+  <meta name="description" content="PRECEPTEUR propose un accompagnement scolaire personnalisé à domicile à Conakry, Dubréka et Coyah. Du primaire au lycée, nos précepteurs révèlent le potentiel de chaque élève.">
+
+  <!-- Google Fonts : Fraunces (display, éditorial) + Manrope (corps, moderne et chaleureux) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================
+       PRECEPTEUR — Page d'accueil
+       Direction artistique : éditorial chaleureux,
+       inspiré du papier ancien, des manuscrits scolaires
+       et de l'élégance du précepteur d'autrefois.
+       ============================================ */
+
+    :root {
+      --ink: #1a1814;
+      --ink-soft: #4a463d;
+      --ink-muted: #6f6a5e;
+      --paper: #f7f1e3;
+      --paper-warm: #f0e6cf;
+      --paper-aged: #e8dcc0;
+      --gold: #b8893d;
+      --gold-deep: #8c6628;
+      --terracotta: #b85c3a;
+      --ocean: #1f4a5c;
+      --ocean-deep: #0f2d3a;
+      --sage: #5c7a4f;
+      --line: rgba(26, 24, 20, 0.12);
+      --line-strong: rgba(26, 24, 20, 0.25);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Manrope', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.7;
+      font-size: 16px;
+      overflow-x: hidden;
+
+      /* Texture papier subtile */
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(184, 137, 61, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(184, 92, 58, 0.03) 0%, transparent 50%);
+    }
+
+    /* ===== TYPOGRAPHIE ===== */
+    h1, h2, h3 {
+      font-family: 'Fraunces', serif;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+
+    .serif-italic {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    /* ===== NAVIGATION ===== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(247, 241, 227, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      color: var(--ink);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-ornament {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: 1.5px solid var(--gold);
+      border-radius: 50%;
+      position: relative;
+    }
+    .logo-ornament::after {
+      content: 'P';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gold-deep);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--ink-soft);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.25s ease;
+      position: relative;
+    }
+
+    .nav-links a:hover { color: var(--gold-deep); }
+
+    .nav-links a:not(.btn-nav)::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold-deep);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:not(.btn-nav):hover::after { width: 100%; }
+
+    .btn-nav {
+      background: var(--ocean-deep);
+      color: var(--paper) !important;
+      padding: 10px 22px;
+      border-radius: 2px;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+    }
+    .btn-nav:hover { background: var(--ocean); color: var(--paper-warm) !important; }
+    .btn-nav::after { display: none; }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      padding: 100px 32px 120px;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-ornament-top {
+      font-family: 'Fraunces', serif;
+      font-size: 28px;
+      color: var(--gold);
+      letter-spacing: 8px;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards;
+    }
+
+    .hero h1 {
+      font-size: clamp(54px, 9vw, 110px);
+      font-weight: 500;
+      letter-spacing: 4px;
+      line-height: 1;
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.15s forwards;
+    }
+
+    .hero h1 .accent {
+      font-style: italic;
+      color: var(--terracotta);
+      font-weight: 400;
+    }
+
+    .hero-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin: 0 auto 32px;
+      max-width: 380px;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.3s forwards;
+    }
+    .hero-divider .line {
+      flex: 1;
+      height: 1px;
+      background: var(--line-strong);
+    }
+    .hero-divider .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+
+    .hero-tagline {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: clamp(20px, 2.5vw, 26px);
+      color: var(--ink-soft);
+      max-width: 680px;
+      margin: 0 auto 48px;
+      line-height: 1.5;
+      font-weight: 400;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.45s forwards;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--ocean-deep);
+      color: var(--paper);
+      padding: 18px 36px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.6s forwards;
+    }
+
+    .hero-cta:hover {
+      background: var(--terracotta);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(184, 92, 58, 0.25);
+    }
+
+    .hero-cta svg { transition: transform 0.3s ease; }
+    .hero-cta:hover svg { transform: translateX(4px); }
+
+    /* Décorations latérales hero */
+    .hero-decoration {
+      position: absolute;
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      color: var(--gold);
+      opacity: 0.15;
+      font-size: 200px;
+      pointer-events: none;
+      user-select: none;
+    }
+    .hero-decoration.left { top: 20%; left: -40px; transform: rotate(-15deg); }
+    .hero-decoration.right { bottom: 10%; right: -30px; transform: rotate(12deg); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== PHILOSOPHIE ===== */
+    .philosophie {
+      background: var(--paper-warm);
+      padding: 120px 32px;
+      position: relative;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .philosophie::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 60px;
+      background: var(--paper-warm);
+      border: 1px solid var(--line);
+      border-top: none;
+      border-left: none;
+      transform-origin: center;
+      transform: translateX(-50%) translateY(-30px) rotate(45deg);
+    }
+
+    .philosophie-inner {
+      max-width: 880px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .section-label {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 16px;
+      color: var(--gold-deep);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::before,
+    .section-label::after {
+      content: '';
+      width: 30px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .philosophie h2 {
+      font-size: clamp(36px, 5vw, 52px);
+      line-height: 1.15;
+      margin-bottom: 32px;
+    }
+
+    .philosophie h2 em {
+      font-style: italic;
+      color: var(--terracotta);
+    }
+
+    .philosophie p {
+      font-size: 18px;
+      color: var(--ink-soft);
+      max-width: 680px;
+      margin: 0 auto 20px;
+    }
+
+    .philosophie p strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-top: 80px;
+    }
+
+    .pillar {
+      text-align: center;
+    }
+
+    .pillar-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid var(--gold);
+      border-radius: 50%;
+      font-family: 'Fraunces', serif;
+      font-size: 28px;
+      color: var(--gold-deep);
+      background: var(--paper);
+    }
+
+    .pillar h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .pillar p {
+      font-size: 15px;
+      color: var(--ink-muted);
+      margin: 0;
+    }
+
+    /* ===== OFFRES ===== */
+    .offres {
+      padding: 120px 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .offres-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .offres-header h2 {
+      font-size: clamp(36px, 5vw, 52px);
+      margin-top: 20px;
+    }
+
+    .offres-header h2 em {
+      font-style: italic;
+    }
+
+    .offres-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .offre-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      padding: 48px 40px;
+      position: relative;
+      transition: all 0.4s ease;
+      overflow: hidden;
+    }
+
+    .offre-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--accent-color, var(--gold));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s ease;
+    }
+
+    .offre-card:hover::before { transform: scaleX(1); }
+
+    .offre-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(26, 24, 20, 0.08);
+    }
+
+    .offre-card.primaire { --accent-color: var(--sage); }
+    .offre-card.college { --accent-color: var(--ocean); }
+
+    .offre-number {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 14px;
+      color: var(--ink-muted);
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .offre-number .num {
+      color: var(--accent-color);
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .offre-card h3 {
+      font-size: 36px;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .offre-subtitle {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 17px;
+      color: var(--accent-color);
+      margin-bottom: 28px;
+      font-weight: 500;
+    }
+
+    .offre-card p {
+      color: var(--ink-soft);
+      margin-bottom: 28px;
+      font-size: 15px;
+    }
+
+    .offre-list {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+
+    .offre-list li {
+      padding: 14px 0;
+      border-bottom: 1px dashed var(--line);
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 15px;
+    }
+
+    .offre-list li:last-child { border-bottom: none; }
+
+    .offre-list .bullet {
+      color: var(--accent-color);
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 1.4;
+      flex-shrink: 0;
+    }
+
+    .offre-list strong {
+      font-weight: 600;
+      color: var(--ink);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .offre-list .desc {
+      color: var(--ink-muted);
+      font-size: 14px;
+      display: block;
+    }
+
+    .offre-footer {
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--ink-soft);
+    }
+
+    /* ===== ZONE GÉOGRAPHIQUE ===== */
+    .zones {
+      background: var(--ocean-deep);
+      color: var(--paper);
+      padding: 120px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .zones::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 30% 20%, rgba(184, 137, 61, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(184, 92, 58, 0.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .zones-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .zones-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .zones .section-label {
+      color: var(--gold);
+    }
+    .zones .section-label::before,
+    .zones .section-label::after {
+      background: var(--gold);
+    }
+
+    .zones h2 {
+      color: var(--paper);
+      font-size: clamp(36px, 5vw, 52px);
+      margin: 20px 0 24px;
+    }
+
+    .zones h2 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .zones-intro {
+      max-width: 620px;
+      margin: 0 auto;
+      color: rgba(247, 241, 227, 0.75);
+      font-size: 17px;
+    }
+
+    .villes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 64px;
+    }
+
+    .ville {
+      border: 1px solid rgba(247, 241, 227, 0.15);
+      padding: 40px 28px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      background: rgba(247, 241, 227, 0.02);
+    }
+
+    .ville:hover {
+      background: rgba(247, 241, 227, 0.05);
+      border-color: var(--gold);
+      transform: translateY(-4px);
+    }
+
+    .ville-num {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 14px;
+      color: var(--gold);
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
+    .ville h3 {
+      font-family: 'Fraunces', serif;
+      color: var(--paper);
+      font-size: 32px;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+
+    .ville p {
+      font-size: 14px;
+      color: rgba(247, 241, 227, 0.6);
+      font-style: italic;
+      font-family: 'Fraunces', serif;
+    }
+
+    .zones-note {
+      text-align: center;
+      margin-top: 64px;
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 17px;
+      color: rgba(247, 241, 227, 0.75);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .zones-note .quote-mark {
+      font-size: 48px;
+      color: var(--gold);
+      display: block;
+      line-height: 0.5;
+      margin-bottom: 16px;
+    }
+
+    /* ===== CTA FINAL ===== */
+    .cta {
+      padding: 140px 32px;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .cta-ornament {
+      font-family: 'Fraunces', serif;
+      color: var(--gold);
+      font-size: 24px;
+      letter-spacing: 12px;
+      margin-bottom: 40px;
+    }
+
+    .cta h2 {
+      font-size: clamp(40px, 6vw, 64px);
+      line-height: 1.1;
+      margin-bottom: 32px;
+    }
+
+    .cta h2 em {
+      font-style: italic;
+      color: var(--terracotta);
+    }
+
+    .cta p {
+      font-size: 18px;
+      color: var(--ink-soft);
+      max-width: 580px;
+      margin: 0 auto 48px;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary, .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 20px 40px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: var(--ocean-deep);
+      color: var(--paper);
+      border: 2px solid var(--ocean-deep);
+    }
+    .btn-primary:hover {
+      background: var(--terracotta);
+      border-color: var(--terracotta);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(184, 92, 58, 0.25);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--ink);
+      border: 2px solid var(--ink);
+    }
+    .btn-secondary:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--ink);
+      color: var(--paper-warm);
+      padding: 60px 32px 32px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(247, 241, 227, 0.1);
+    }
+
+    .footer-brand h3 {
+      color: var(--paper);
+      font-family: 'Fraunces', serif;
+      font-size: 24px;
+      letter-spacing: 3px;
+      margin-bottom: 16px;
+    }
+
+    .footer-brand p {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      color: rgba(247, 241, 227, 0.6);
+      font-size: 15px;
+      max-width: 360px;
+    }
+
+    .footer-col h4 {
+      color: var(--gold);
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .footer-col ul { list-style: none; }
+    .footer-col li {
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: rgba(247, 241, 227, 0.7);
+    }
+
+    .footer-col a {
+      color: rgba(247, 241, 227, 0.7);
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+    .footer-col a:hover { color: var(--gold); }
+
+    .footer-social {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .footer-social a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--paper-warm);
+      background: rgba(247, 241, 227, 0.06);
+      border: 1px solid rgba(247, 241, 227, 0.15);
+      padding: 8px 14px;
+      border-radius: 2px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    .footer-social a:hover {
+      background: var(--gold);
+      color: var(--ink);
+      border-color: var(--gold);
+    }
+    .footer-social a svg { flex-shrink: 0; }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: rgba(247, 241, 227, 0.45);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .nav-links { gap: 20px; }
+      .nav-links a:not(.btn-nav):not(.logo) { display: none; }
+
+      .pillars,
+      .offres-grid,
+      .villes,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero { padding: 60px 24px 80px; }
+      .philosophie, .offres, .zones, .cta { padding: 80px 24px; }
+
+      .offre-card { padding: 36px 28px; }
+      .offre-card h3 { font-size: 28px; }
+
+      .cta-buttons { flex-direction: column; align-items: stretch; }
+
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+
+      .hero-decoration { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <span class="logo-ornament"></span>
+        PRECEPTEUR
+      </a>
+      <ul class="nav-links">
+        <li><a href="#philosophie">Notre philosophie</a></li>
+        <li><a href="#offres">Nos offres</a></li>
+        <li><a href="#zones">Zones</a></li>
+        <li><a href="tel:+224620158426" class="btn-nav">Appeler un conseiller</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <span class="hero-decoration left">«</span>
+    <span class="hero-decoration right">»</span>
+
+    <div class="hero-ornament-top">— ✦ —</div>
+
+    <h1>PRE<span class="accent">CEP</span>TEUR</h1>
+
+    <div class="hero-divider">
+      <span class="line"></span>
+      <span class="dot"></span>
+      <span class="line"></span>
+    </div>
+
+    <p class="hero-tagline">
+      Un accompagnement scolaire personnalisé<br>
+      pour révéler le potentiel de chaque élève.
+    </p>
+
+    <a href="tel:+224620158426" class="hero-cta">
+      Appeler un conseiller
+      <svg width="18" height="12" viewBox="0 0 18 12" fill="none">
+        <path d="M1 6H17M17 6L12 1M17 6L12 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </a>
+  </header>
+
+  <!-- PHILOSOPHIE -->
+  <section class="philosophie" id="philosophie">
+    <div class="philosophie-inner">
+      <span class="section-label">Notre philosophie</span>
+      <h2>Chaque enfant <em>est unique.</em></h2>
+      <p>
+        Sa façon d'apprendre, son rythme, ses forces et ses difficultés lui appartiennent. C'est pourquoi, chez PRECEPTEUR, nous refusons les solutions toutes faites.
+      </p>
+      <p>
+        Nous concevons un accompagnement <strong>entièrement sur-mesure</strong>, pensé autour de votre enfant : son niveau réel, son caractère, ses objectifs et le programme qu'il suit en classe. Nos précepteurs ne se contentent pas de réexpliquer les leçons — ils créent une relation de confiance, transmettent une méthode de travail durable et redonnent le goût d'apprendre.
+      </p>
+
+      <div class="pillars">
+        <div class="pillar">
+          <div class="pillar-icon">i</div>
+          <h3>Sur-mesure</h3>
+          <p>Un programme conçu autour des besoins réels de votre enfant.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">ii</div>
+          <h3>À domicile</h3>
+          <p>Le précepteur se déplace chez vous, dans un cadre familier.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">iii</div>
+          <h3>Sérieux</h3>
+          <p>Des précepteurs qualifiés et un suivi pédagogique rigoureux.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFFRES -->
+  <section class="offres" id="offres">
+    <div class="offres-header">
+      <span class="section-label">Nos offres</span>
+      <h2>Un accompagnement adapté <em>à chaque âge.</em></h2>
+    </div>
+
+    <div class="offres-grid">
+
+      <!-- Primaire -->
+      <article class="offre-card primaire">
+        <div class="offre-number"><span class="num">I.</span> &nbsp;Pour les fondations</div>
+        <h3>Primaire</h3>
+        <div class="offre-subtitle">Construire des bases solides</div>
+        <p>
+          Les premières années d'école sont décisives. C'est à ce moment que se construisent les fondations de toute la scolarité future. Nous accompagnons votre enfant dans la maîtrise des apprentissages essentiels.
+        </p>
+        <ul class="offre-list">
+          <li>
+            <span class="bullet">·</span>
+            <div>
+              <strong>Lecture</strong>
+              <span class="desc">Déchiffrage, fluidité et compréhension.</span>
+            </div>
+          </li>
+          <li>
+            <span class="bullet">·</span>
+            <div>
+              <strong>Écriture</strong>
+              <span class="desc">Tenue du stylo, orthographe, expression écrite.</span>
+            </div>
+          </li>
+          <li>
+            <span class="bullet">·</span>
+            <div>
+              <strong>Calcul</strong>
+              <span class="desc">Numération, opérations et résolution de problèmes.</span>
+            </div>
+          </li>
+        </ul>
+        <div class="offre-footer">
+          Dans une atmosphère bienveillante et patiente, pour redonner confiance et sérénité.
+        </div>
+      </article>
+
+      <!-- Collège & Lycée -->
+      <article class="offre-card college">
+        <div class="offre-number"><span class="num">II.</span> &nbsp;Pour la performance</div>
+        <h3>Collège & Lycée</h3>
+        <div class="offre-subtitle">Performance et méthodologie</div>
+        <p>
+          À mesure que la scolarité avance, les exigences s'intensifient. Nos précepteurs interviennent dans les matières clés et transmettent une véritable méthode de travail durable.
+        </p>
+        <ul class="offre-list">
+          <li>
+            <span class="bullet">·</span>
+            <div>
+              <strong>Mathématiques</strong>
+              <span class="desc">Maîtrise des notions et résolution de problèmes.</span>
+            </div>
+          </li>
+          <li>
+            <span class="bullet">·</span>
+            <div>
+              <strong>Physique-Chimie</strong>
+              <span class="desc">Compréhension des concepts et rigueur expérimentale.</span>
+            </div>
+          </li>
+          <li>
+            <span class="bullet">·</span>
+            <div>
+              <strong>Français</strong>
+              <span class="desc">Expression, analyse de texte, préparation aux épreuves.</span>
+            </div>
+          </li>
+          <li>
+            <span class="bullet">·</span>
+            <div>
+              <strong>Anglais</strong>
+              <span class="desc">Grammaire, vocabulaire et aisance à l'oral.</span>
+            </div>
+          </li>
+        </ul>
+        <div class="offre-footer">
+          Organisation, prise de notes, gestion du temps et préparation efficace aux examens.
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ZONES -->
+  <section class="zones" id="zones">
+    <div class="zones-inner">
+      <div class="zones-header">
+        <span class="section-label">Zone d'intervention</span>
+        <h2>Une présence locale, <em>un service à domicile.</em></h2>
+        <p class="zones-intro">
+          PRECEPTEUR, c'est un service de proximité au cœur de la Guinée. Nos précepteurs se déplacent directement à votre domicile, pour que votre enfant puisse apprendre dans son cadre familier, sans contrainte de transport ni perte de temps.
+        </p>
+      </div>
+
+      <div class="villes">
+        <div class="ville">
+          <div class="ville-num">— i —</div>
+          <h3>Conakry</h3>
+          <p>La capitale et ses communes</p>
+        </div>
+        <div class="ville">
+          <div class="ville-num">— ii —</div>
+          <h3>Dubréka</h3>
+          <p>Et ses environs</p>
+        </div>
+        <div class="ville">
+          <div class="ville-num">— iii —</div>
+          <h3>Coyah</h3>
+          <p>Et ses environs</p>
+        </div>
+      </div>
+
+      <div class="zones-note">
+        <span class="quote-mark">"</span>
+        Cette proximité géographique nous permet de bâtir une relation humaine durable avec chaque famille et d'assurer un suivi régulier, sérieux et de qualité.
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta" id="contact">
+    <div class="cta-ornament">✦ ✦ ✦</div>
+    <h2>Besoin d'un accompagnement <em>sur-mesure</em><br>pour votre enfant ?</h2>
+    <p>
+      Échangez dès aujourd'hui avec l'un de nos conseillers. Nous prenons le temps d'écouter votre situation, de comprendre les besoins de votre enfant et de vous proposer la formule la plus adaptée.
+    </p>
+    <div class="cta-buttons">
+      <a href="tel:+224620158426" class="btn-primary">
+        Appeler : 620 15 84 26
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="none">
+          <path d="M1 6H17M17 6L12 1M17 6L12 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </a>
+      <a href="https://wa.me/224664262926" target="_blank" rel="noopener" class="btn-secondary">
+        WhatsApp : 664 26 29 26
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>PRECEPTEUR</h3>
+          <p>Un accompagnement scolaire personnalisé pour révéler le potentiel de chaque élève.</p>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/share/1CsK9DFUVD/" target="_blank" rel="noopener" aria-label="Page Facebook PRECEPTEUR">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+              <span>Facebook</span>
+            </a>
+            <a href="https://wa.me/224664262926" target="_blank" rel="noopener" aria-label="WhatsApp PRECEPTEUR">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.464 3.488"/>
+              </svg>
+              <span>WhatsApp</span>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Zones d'intervention</h4>
+          <ul>
+            <li>Conakry</li>
+            <li>Dubréka</li>
+            <li>Coyah</li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:+224620158426">+224 620 15 84 26</a></li>
+            <li><a href="https://wa.me/224664262926" target="_blank" rel="noopener">WhatsApp : 664 26 29 26</a></li>
+            <li><a href="mailto:amadoukeitagn224@gmail.com">amadoukeitagn224@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 PRECEPTEUR — Tous droits réservés</span>
+        <span>Conakry · Dubréka · Coyah</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
