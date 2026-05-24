@@ -3,254 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Précepteur - Cours à domicile en Guinée</title>
+    <title>PRÉCEPTEUR | Cours à Domicile de Qualité</title>
     <style>
-        /* Styles Globaux */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; }
 
-        /* 1. En-tête (Navigation) */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 10%;
-            background-color: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        header .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #1a365d;
-            letter-spacing: 1px;
-        }
-        header nav a {
-            text-decoration: none;
-            color: #4a5568;
-            margin-left: 20px;
-            font-weight: 500;
-        }
+        /* HEADER & NAVIGATION */
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 10%; background-color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
+        header .logo { font-size: 1.5rem; font-weight: bold; color: #1a365d; letter-spacing: 1px; }
+        nav { display: flex; align-items: center; gap: 20px; }
+        nav a { text-decoration: none; color: #4a5568; font-weight: 500; }
+        .btn-appel-top { background-color: #dd6b20; color: white; padding: 10px 20px; border-radius: 25px; font-weight: bold; text-decoration: none; transition: 0.2s; }
+        .btn-appel-top:hover { background-color: #c05621; }
 
-        /* 2. Section Héros (Présentation) */
-        .hero {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 60px 10%;
-            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-        .hero-content {
-            flex: 1;
-            min-width: 300px;
-            text-align: left;
-        }
-        .hero-content h1 {
-            color: #1a365d;
-            font-size: 3rem;
-            margin: 0 0 20px 0;
-        }
-        .hero-content p {
-            font-size: 1.25rem;
-            color: #4a5568;
-            line-height: 1.6;
-        }
-        .hero-image {
-            flex: 1;
-            min-width: 300px;
-            text-align: center;
-        }
-        .hero-image img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 12px;
-        }
+        /* SECTIONS GENERALES */
+        section { padding: 60px 10%; text-align: center; }
+        h2 { color: #1a365d; font-size: 2rem; margin-bottom: 30px; text-transform: uppercase; }
 
-        /* 3. Section Offres */
-        .offres {
-            padding: 60px 10%;
-            text-align: center;
-        }
-        .offres h2 {
-            color: #1a365d;
-            font-size: 2rem;
-            margin-bottom: 40px;
-        }
-        .offres-grid {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-        .carte-offre {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 15px rgba(0,0,0,0.05);
-            width: 300px;
-            text-align: left;
-            border-top: 5px solid #2b6cb0;
-        }
-        .carte-offre.secondaire {
-            border-top-color: #319795;
-        }
-        .icone-offre {
-            width: 60px;
-            height: auto;
-            margin-bottom: 15px;
-        }
-        .carte-offre h3 {
-            color: #2d3748;
-            margin: 10px 0;
-            font-size: 1.3rem;
-        }
-        .carte-offre ul {
-            padding-left: 20px;
-            color: #4a5568;
-            line-height: 1.8;
-        }
+        /* HERO SECTION */
+        .hero { display: flex; align-items: center; justify-content: space-between; background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%); gap: 40px; flex-wrap: wrap; text-align: left; }
+        .hero-content { flex: 1; min-width: 300px; }
+        .hero-content h1 { color: #1a365d; font-size: 3rem; margin-bottom: 20px; }
+        .hero-content p { font-size: 1.25rem; color: #4a5568; }
+        .hero-image { flex: 1; min-width: 300px; text-align: center; }
+        .hero-image img { max-width: 100%; height: auto; border-radius: 12px; }
 
-        /* 4. Section Zone d'intervention */
-        .zone {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 60px 10%;
-            background-color: white;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-        .zone-text {
-            flex: 1;
-            min-width: 300px;
-            text-align: left;
-        }
-        .zone-text h3 {
-            color: #1a365d;
-            font-size: 1.8rem;
-            margin-top: 0;
-        }
-        .zone-text p {
-            font-size: 1.1rem;
-            color: #4a5568;
-            line-height: 1.6;
-        }
-        .zone-map {
-            flex: 1;
-            min-width: 300px;
-            text-align: center;
-        }
-        .zone-map img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
+        /* SECTION NOS PRECEPTEURS */
+        .precepteurs-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 20px; }
+        .tutor-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 15px rgba(0,0,0,0.05); width: 320px; text-align: center; border-top: 5px solid #1a365d; }
+        .tutor-card img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 3px solid #e2e8f0; }
+        .tutor-card h3 { color: #2d3748; font-size: 1.4rem; margin-bottom: 5px; }
+        .tutor-matiere { color: #dd6b20; font-weight: bold; font-size: 1rem; margin-bottom: 15px; text-transform: uppercase; }
+        .tutor-cv { color: #4a5568; font-size: 0.95rem; text-align: left; }
 
-        /* 5. Section Appel (Footer) */
-        footer {
-            background-color: #feebc8;
-            padding: 40px 20px;
-            text-align: center;
-            border-top: 2px solid #fbd38d;
-        }
-        footer p {
-            font-size: 1.2rem;
-            color: #744210;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .bouton-appel {
-            display: inline-block;
-            background-color: #dd6b20;
-            color: white;
-            text-decoration: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            border-radius: 30px;
-            font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.2s, background-color 0.2s;
-        }
-        .bouton-appel:hover {
-            background-color: #c05621;
-            transform: translateY(-2px);
-        }
+        /* ZONE D'INTERVENTION */
+        .zone { display: flex; align-items: center; justify-content: space-between; background-color: white; gap: 40px; flex-wrap: wrap; text-align: left; }
+        .zone-text { flex: 1; min-width: 300px; }
+        .zone-map { flex: 1; min-width: 300px; text-align: center; }
+        .zone-map img { max-width: 100%; height: auto; border-radius: 8px; }
+
+        /* FOOTER */
+        footer { background-color: #feebc8; padding: 50px 20px; border-top: 2px solid #fbd38d; }
+        footer p { font-size: 1.25rem; color: #744210; font-weight: bold; margin-bottom: 25px; }
+        .boutons-footer { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .btn-appel-bot { background-color: #dd6b20; color: white; text-decoration: none; padding: 15px 40px; font-size: 1.2rem; border-radius: 30px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.2s; }
+        .btn-appel-bot:hover { background-color: #c05621; }
+        .btn-facebook { background-color: #1877f2; color: white; text-decoration: none; padding: 15px 40px; font-size: 1.2rem; border-radius: 30px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.2s; }
+        .btn-facebook:hover { background-color: #145dbf; }
     </style>
 </head>
 <body>
 
-    <!-- 1. En-tête (Header) -->
     <header>
         <div class="logo">PRECEPTEUR</div>
         <nav>
-            <a href="#">Nos Offres</a>
-            <a href="#">Zone</a>
-            <a href="#">Tarifs</a>
-            <a href="#">Inscription</a>
+            <a href="#profs">Nos Précepteurs</a>
+            <a href="#zone">Zones</a>
+            <a href="tel:+224620158426" class="btn-appel-top">📞 Appeler un conseiller</a>
         </nav>
     </header>
 
-    <!-- 2. Section Héros (Hero) -->
     <section class="hero">
         <div class="hero-content">
             <h1>PRECEPTEUR</h1>
-            <p><strong>Un accompagnement scolaire personnalisé pour révéler le potentiel de chaque élève.</strong></p>
+            <p><strong>Un accompagnement scolaire personnalisé à domicile pour révéler le potentiel de chaque élève et garantir sa réussite.</strong></p>
         </div>
         <div class="hero-image">
-            <img src="http://googleusercontent.com/image_generation_content/2" alt="Enseignante et élèves Précepteur">
+            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600" alt="Cours de soutien">
         </div>
     </section>
 
-    <!-- 3. Section Offres -->
-    <section class="offres">
-        <h2>NOS OFFRES SUR-MESURE</h2>
-        <div class="offres-grid">
-            <!-- Carte Primaire -->
-            <div class="carte-offre primaire">
-                <img src="http://googleusercontent.com/image_generation_content/3" alt="Icône Primaire" class="icone-offre">
-                <h3>NIVEAU PRIMAIRE 🎒</h3>
-                <ul>
-                    <li>Lecture & Écriture</li>
-                    <li>Calcul & Mathématiques</li>
-                    <li>Mise en confiance</li>
-                </ul>
+    <section id="profs">
+        <h2>Nos Précepteurs</h2>
+        <p style="color: #4a5568; margin-bottom: 30px; font-size: 1.1rem;">Découvrez les profils et les compétences des tuteurs d'excellence de notre programme.</p>
+        
+        <div class="precepteurs-grid">
+            <div class="tutor-card">
+                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200" alt="Mamadou Diallo">
+                <h3>M. Diallo</h3>
+                <div class="tutor-matiere">Maths & Physique</div>
+                <p class="tutor-cv"><strong>CV abrégé :</strong> Titulaire d'un Master en Sciences de l'UGANC. Plus de 5 ans d'expérience dans l'encadrement des classes d'examen, notamment pour la préparation intensive au Baccalauréat.</p>
             </div>
-            <!-- Carte Collège/Lycée -->
-            <div class="carte-offre secondaire">
-                <img src="http://googleusercontent.com/image_generation_content/4" alt="Icône Secondaire" class="icone-offre">
-                <h3>COLLÈGE & LYCÉE 🎓</h3>
-                <ul>
-                    <li>Maths & Physique-Chimie</li>
-                    <li>Français & Anglais</li>
-                    <li>Méthodologie de révision</li>
-                </ul>
+
+            <div class="tutor-card">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200" alt="Aminata Camara">
+                <h3>Mme Camara</h3>
+                <div class="tutor-matiere">Français & Littérature</div>
+                <p class="tutor-cv"><strong>CV abrégé :</strong> Enseignante certifiée, spécialiste du niveau Primaire et Collège. Excellente approche pédagogique pour le renforcement de la lecture, de l'écriture et la mise en confiance.</p>
+            </div>
+
+            <div class="tutor-card">
+                <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=200" alt="Ibrahima Sow">
+                <h3>M. Sow</h3>
+                <div class="tutor-matiere">Anglais & Méthodologie</div>
+                <p class="tutor-cv"><strong>CV abrégé :</strong> Spécialiste bilingue en coaching scolaire. Accompagne les élèves du Lycée pour l'apprentissage de l'anglais et le développement d'une méthodologie de révision efficace.</p>
             </div>
         </div>
     </section>
 
-    <!-- 4. Section Zone d'intervention -->
-    <section class="zone">
+    <section id="zone" class="zone">
         <div class="zone-text">
-            <h3>NOTRE ZONE D'INTERVENTION</h3>
-            <p>📍 Un précepteur chez vous, où que vous soyez : du centre-ville de <strong>Conakry</strong>, jusqu'à <strong>Dubréka</strong> et <strong>Coyah</strong>.</p>
+            <h2>Notre Zone d'intervention</h2>
+            <p style="font-size: 1.2rem; color: #4a5568;">📍 Un précepteur se déplace directement chez vous, où que vous soyez : du centre-ville de <strong>Conakry</strong>, jusqu'à <strong>Dubréka</strong> et <strong>Coyah</strong>.</p>
         </div>
         <div class="zone-map">
-            <img src="http://googleusercontent.com/image_generation_content/5" alt="Carte de la zone d'intervention Précepteur">
+            <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=600" alt="Zone d'intervention">
         </div>
     </section>
 
-    <!-- 5. Appel à l'action (Footer) -->
     <footer>
         <p>Besoin d'un accompagnement sur-mesure pour votre enfant ?</p>
-        <!-- Pensez à remplacer par votre vrai numéro à la place de tel:+224620000000 -->
-        <a href="tel:+224620000000" class="bouton-appel">📞 APPELER UN CONSEILLER</a>
+        <div class="boutons-footer">
+            <a href="tel:+224620158426" class="btn-appel-bot">📞 APPELER (+224 620 15 84 26)</a>
+            <a href="https://www.facebook.com/share/1CsK9DFUVD/" target="_blank" class="btn-facebook">🔵 Notre page Facebook</a>
+        </div>
     </footer>
 
 </body>
