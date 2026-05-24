@@ -9,8 +9,8 @@
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; }
 
         /* HEADER & NAVIGATION */
-        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 10%; background-color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
-        header .logo { font-size: 1.5rem; font-weight: bold; color: #1a365d; letter-spacing: 1px; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 10%; background-color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
+        .logo-title { color: #1a365d; font-size: 1.8rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
         nav { display: flex; align-items: center; gap: 20px; }
         nav a { text-decoration: none; color: #4a5568; font-weight: 500; }
         .btn-appel-top { background-color: #dd6b20; color: white; padding: 10px 20px; border-radius: 25px; font-weight: bold; text-decoration: none; transition: 0.2s; }
@@ -24,14 +24,12 @@
         .hero { display: flex; align-items: center; justify-content: space-between; background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%); gap: 40px; flex-wrap: wrap; text-align: left; }
         .hero-content { flex: 1; min-width: 300px; }
         .hero-content h1 { color: #1a365d; font-size: 3rem; margin-bottom: 20px; }
-        .hero-content p { font-size: 1.25rem; color: #4a5568; }
-        .hero-image { flex: 1; min-width: 300px; text-align: center; }
-        .hero-image img { max-width: 100%; height: auto; border-radius: 12px; }
+        .hero-content p { font-size: 1.25rem; color: #4a5568; margin-bottom: 20px; }
 
         /* SECTION NOS PRECEPTEURS */
         .precepteurs-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 20px; }
         .tutor-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 15px rgba(0,0,0,0.05); width: 320px; text-align: center; border-top: 5px solid #1a365d; }
-        .tutor-card img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 3px solid #e2e8f0; }
+        .tutor-card img { width: 100%; height: 180px; border-radius: 8px; object-fit: cover; margin-bottom: 15px; border: 1px solid #e2e8f0; }
         .tutor-card h3 { color: #2d3748; font-size: 1.4rem; margin-bottom: 5px; }
         .tutor-matiere { color: #dd6b20; font-weight: bold; font-size: 1rem; margin-bottom: 15px; text-transform: uppercase; }
         .tutor-cv { color: #4a5568; font-size: 0.95rem; text-align: left; }
@@ -39,11 +37,11 @@
         /* ZONE D'INTERVENTION */
         .zone { display: flex; align-items: center; justify-content: space-between; background-color: white; gap: 40px; flex-wrap: wrap; text-align: left; }
         .zone-text { flex: 1; min-width: 300px; }
-        .zone-map { flex: 1; min-width: 300px; text-align: center; }
-        .zone-map img { max-width: 100%; height: auto; border-radius: 8px; }
+        .zone-image { flex: 1; min-width: 300px; text-align: center; }
+        .zone-image img { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
 
         /* FOOTER */
-        footer { background-color: #feebc8; padding: 50px 20px; border-top: 2px solid #fbd38d; }
+        footer { background-color: #feebc8; padding: 50px 20px; border-top: 2px solid #fbd38d; text-align: center; }
         footer p { font-size: 1.25rem; color: #744210; font-weight: bold; margin-bottom: 25px; }
         .boutons-footer { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
         .btn-appel-bot { background-color: #dd6b20; color: white; text-decoration: none; padding: 15px 40px; font-size: 1.2rem; border-radius: 30px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.2s; }
@@ -55,7 +53,7 @@
 <body>
 
     <header>
-        <div class="logo">PRECEPTEUR</div>
+        <div class="logo-title">Précepteur</div>
         <nav>
             <a href="#profs">Nos Précepteurs</a>
             <a href="#zone">Zones</a>
@@ -66,10 +64,7 @@
     <section class="hero">
         <div class="hero-content">
             <h1>PRECEPTEUR</h1>
-            <p><strong>Un accompagnement scolaire personnalisé à domicile pour révéler le potentiel de chaque élève et garantir sa réussite.</strong></p>
-        </div>
-        <div class="hero-image">
-            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600" alt="Cours de soutien">
+            <p><strong>Un accompagnement scolaire personnalisé à domicile pour révéler le potentiel de chaque élève et garantir sa réussite en Guinée.</strong></p>
         </div>
     </section>
 
@@ -79,24 +74,24 @@
         
         <div class="precepteurs-grid">
             <div class="tutor-card">
-                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200" alt="Mamadou Diallo">
+                <img src="image/primaire.png" alt="Soutien Primaire">
                 <h3>M. Diallo</h3>
-                <div class="tutor-matiere">Maths & Physique</div>
-                <p class="tutor-cv"><strong>CV abrégé :</strong> Titulaire d'un Master en Sciences de l'UGANC. Plus de 5 ans d'expérience dans l'encadrement des classes d'examen, notamment pour la préparation intensive au Baccalauréat.</p>
+                <div class="tutor-matiere">Niveau Primaire</div>
+                <p class="tutor-cv"><strong>Spécialité :</strong> Maîtrise des programmes fondamentaux, renforcement en lecture, calcul et écriture. Idéal pour donner de bonnes habitudes d'organisation dès le départ.</p>
             </div>
 
             <div class="tutor-card">
-                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200" alt="Aminata Camara">
+                <img src="image/enseignante.png" alt="Enseignante d'Excellence">
                 <h3>Mme Camara</h3>
-                <div class="tutor-matiere">Français & Littérature</div>
-                <p class="tutor-cv"><strong>CV abrégé :</strong> Enseignante certifiée, spécialiste du niveau Primaire et Collège. Excellente approche pédagogique pour le renforcement de la lecture, de l'écriture et la mise en confiance.</p>
+                <div class="tutor-matiere">Français & Histoire</div>
+                <p class="tutor-cv"><strong>Spécialité :</strong> Enseignante certifiée, spécialiste du développement de la méthodologie et de la confiance en soi pour surmonter les blocages scolaires.</p>
             </div>
 
             <div class="tutor-card">
-                <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=200" alt="Ibrahima Sow">
+                <img src="image/collège lycee.png" alt="Soutien Collège et Lycée">
                 <h3>M. Sow</h3>
-                <div class="tutor-matiere">Anglais & Méthodologie</div>
-                <p class="tutor-cv"><strong>CV abrégé :</strong> Spécialiste bilingue en coaching scolaire. Accompagne les élèves du Lycée pour l'apprentissage de l'anglais et le développement d'une méthodologie de révision efficace.</p>
+                <div class="tutor-matiere">Maths & Physique</div>
+                <p class="tutor-cv"><strong>Spécialité :</strong> Préparation intensive aux brevets et examens nationaux. Suivi rigoureux pour les filières scientifiques au Collège et au Lycée.</p>
             </div>
         </div>
     </section>
@@ -104,10 +99,11 @@
     <section id="zone" class="zone">
         <div class="zone-text">
             <h2>Notre Zone d'intervention</h2>
-            <p style="font-size: 1.2rem; color: #4a5568;">📍 Un précepteur se déplace directement chez vous, où que vous soyez : du centre-ville de <strong>Conakry</strong>, jusqu'à <strong>Dubréka</strong> et <strong>Coyah</strong>.</p>
+            <p style="font-size: 1.2rem; color: #4a5568; margin-bottom: 15px;">📍 Un précepteur se déplace directement chez vous, où que vous soyez : du centre-ville de <strong>Conakry</strong>, jusqu'à <strong>Dubréka</strong> et <strong>Coyah</strong>.</p>
+            <p style="font-size: 1.1rem; font-style: italic; color: #dd6b20;">« À domicile, l'apprentissage devient plus humain, plus proche, plus efficace. »</p>
         </div>
-        <div class="zone-map">
-            <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=600" alt="Zone d'intervention">
+        <div class="zone-image">
+            <img src="image/carte.png" alt="Carte de zone d'intervention">
         </div>
     </section>
 
