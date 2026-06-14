@@ -1,119 +1,456 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRÉCEPTEUR | Cours à Domicile de Qualité</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; line-height: 1.6; }
+import { useState, useEffect, useRef } from "react";
 
-        /* HEADER & NAVIGATION */
-        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 10%; background-color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
-        .logo-title { color: #1a365d; font-size: 1.8rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
-        nav { display: flex; align-items: center; gap: 20px; }
-        nav a { text-decoration: none; color: #4a5568; font-weight: 500; }
-        .btn-appel-top { background-color: #dd6b20; color: white; padding: 10px 20px; border-radius: 25px; font-weight: bold; text-decoration: none; transition: 0.2s; }
-        .btn-appel-top:hover { background-color: #c05621; }
+const NIVEAUX = ["CP1", "CP2", "CE1", "CE2", "CM1", "CM2"];
 
-        /* SECTIONS GENERALES */
-        section { padding: 60px 10%; text-align: center; }
-        h2 { color: #1a365d; font-size: 2rem; margin-bottom: 30px; text-transform: uppercase; }
+const systemPrompt = `Tu es un expert international en évaluation diagnostique des apprentissages fondamentaux spécialisé en Lecture, Écriture et Mathématiques pour les élèves du CP1 au CM2 en contexte guinéen francophone.
 
-        /* HERO SECTION */
-        .hero { display: flex; align-items: center; justify-content: space-between; background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%); gap: 40px; flex-wrap: wrap; text-align: left; }
-        .hero-content { flex: 1; min-width: 300px; }
-        .hero-content h1 { color: #1a365d; font-size: 3rem; margin-bottom: 20px; }
-        .hero-content p { font-size: 1.25rem; color: #4a5568; margin-bottom: 20px; }
+Tu maîtrises : l'approche par compétences, l'évaluation diagnostique, la remédiation pédagogique, et les programmes guinéens INRAP du primaire.
 
-        /* SECTION NOS PRECEPTEURS */
-        .precepteurs-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 20px; }
-        .tutor-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 15px rgba(0,0,0,0.05); width: 320px; text-align: center; border-top: 5px solid #1a365d; }
-        .tutor-card img { width: 100%; height: 180px; border-radius: 8px; object-fit: cover; margin-bottom: 15px; border: 1px solid #e2e8f0; }
-        .tutor-card h3 { color: #2d3748; font-size: 1.4rem; margin-bottom: 5px; }
-        .tutor-matiere { color: #dd6b20; font-weight: bold; font-size: 1rem; margin-bottom: 15px; text-transform: uppercase; }
-        .tutor-cv { color: #4a5568; font-size: 0.95rem; text-align: left; }
+RÈGLES ABSOLUES :
+- Utiliser des prénoms guinéens : Mamadou, Fatoumata, Aïssatou, Ibrahima, Mariama, Ousmane
+- Utiliser des contextes locaux : école, famille, marché, champ, village, quartier
+- Adapter rigoureusement au niveau scolaire indiqué
+- Produire du contenu directement utilisable par un enseignant
+- Ne jamais faire de diagnostic médical
+- Toujours ajouter : « Ceci n'est pas un diagnostic médical. Seul un professionnel qualifié peut établir un diagnostic clinique. » si des troubles d'apprentissage sont évoqués
 
-        /* ZONE D'INTERVENTION */
-        .zone { display: flex; align-items: center; justify-content: space-between; background-color: white; gap: 40px; flex-wrap: wrap; text-align: left; }
-        .zone-text { flex: 1; min-width: 300px; }
-        .zone-image { flex: 1; min-width: 300px; text-align: center; }
-        .zone-image img { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+FORMAT DE SORTIE : Markdown structuré avec des sections claires, des tableaux et des listes.`;
 
-        /* FOOTER */
-        footer { background-color: #feebc8; padding: 50px 20px; border-top: 2px solid #fbd38d; text-align: center; }
-        footer p { font-size: 1.25rem; color: #744210; font-weight: bold; margin-bottom: 25px; }
-        .boutons-footer { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .btn-appel-bot { background-color: #dd6b20; color: white; text-decoration: none; padding: 15px 40px; font-size: 1.2rem; border-radius: 30px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.2s; }
-        .btn-appel-bot:hover { background-color: #c05621; }
-        .btn-facebook { background-color: #1877f2; color: white; text-decoration: none; padding: 15px 40px; font-size: 1.2rem; border-radius: 30px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: 0.2s; }
-        .btn-facebook:hover { background-color: #145dbf; }
-    </style>
-</head>
-<body>
+const MODES = [
+  { id: "test", label: "Générer un test", icon: "📝", desc: "Créer un test diagnostique complet" },
+  { id: "correction", label: "Analyser les résultats", icon: "📊", desc: "Analyser les résultats et produire un plan de remédiation" },
+  { id: "remediation", label: "Plan de remédiation", icon: "🔧", desc: "Générer un plan de remédiation ciblé" },
+];
 
-    <header>
-        <div class="logo-title">Précepteur</div>
-        <nav>
-            <a href="#profs">Nos Précepteurs</a>
-            <a href="#zone">Zones</a>
-            <a href="tel:+224620158426" class="btn-appel-top">📞 Appeler un conseiller</a>
-        </nav>
-    </header>
+const HISTORY_KEY = "evaluations-history";
+const MAX_HISTORY = 25;
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>PRECEPTEUR</h1>
-            <p><strong>Un accompagnement scolaire personnalisé à domicile pour révéler le potentiel de chaque élève et garantir sa réussite en Guinée.</strong></p>
+function MarkdownRenderer({ text }) {
+  const lines = text.split("\n");
+  const elements = [];
+  let i = 0;
+
+  while (i < lines.length) {
+    const line = lines[i];
+
+    if (line.startsWith("# ")) {
+      elements.push(<h1 key={i} style={{ fontSize: "1.4rem", fontWeight: 700, color: "#1a3a2a", marginTop: "1.5rem", marginBottom: "0.5rem", borderBottom: "2px solid #2d6a4f", paddingBottom: "0.4rem" }}>{line.slice(2)}</h1>);
+    } else if (line.startsWith("## ")) {
+      elements.push(<h2 key={i} style={{ fontSize: "1.15rem", fontWeight: 700, color: "#2d6a4f", marginTop: "1.2rem", marginBottom: "0.4rem" }}>{line.slice(3)}</h2>);
+    } else if (line.startsWith("### ")) {
+      elements.push(<h3 key={i} style={{ fontSize: "1rem", fontWeight: 600, color: "#40916c", marginTop: "1rem", marginBottom: "0.3rem" }}>{line.slice(4)}</h3>);
+    } else if (line.startsWith("---")) {
+      elements.push(<hr key={i} style={{ border: "none", borderTop: "1px solid #d8f3dc", margin: "1rem 0" }} />);
+    } else if (line.startsWith("- ") || line.startsWith("* ")) {
+      elements.push(<li key={i} style={{ marginLeft: "1.2rem", marginBottom: "0.2rem", color: "#1b4332" }}>{renderInline(line.slice(2))}</li>);
+    } else if (/^\d+\.\s/.test(line)) {
+      elements.push(<li key={i} style={{ marginLeft: "1.2rem", marginBottom: "0.2rem", listStyleType: "decimal", color: "#1b4332" }}>{renderInline(line.replace(/^\d+\.\s/, ""))}</li>);
+    } else if (line.startsWith("|")) {
+      const tableLines = [];
+      while (i < lines.length && lines[i].startsWith("|")) {
+        tableLines.push(lines[i]);
+        i++;
+      }
+      elements.push(renderTable(tableLines, i));
+      continue;
+    } else if (line.trim() !== "") {
+      elements.push(<p key={i} style={{ marginBottom: "0.5rem", color: "#1b4332", lineHeight: 1.6 }}>{renderInline(line)}</p>);
+    }
+    i++;
+  }
+
+  return <div style={{ fontFamily: "'Segoe UI', sans-serif" }}>{elements}</div>;
+}
+
+function renderInline(text) {
+  const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith("**") && part.endsWith("**")) return <strong key={i}>{part.slice(2, -2)}</strong>;
+    if (part.startsWith("*") && part.endsWith("*")) return <em key={i}>{part.slice(1, -1)}</em>;
+    if (part.startsWith("`") && part.endsWith("`")) return <code key={i} style={{ background: "#d8f3dc", padding: "0.1rem 0.3rem", borderRadius: "3px", fontSize: "0.9em" }}>{part.slice(1, -1)}</code>;
+    return part;
+  });
+}
+
+function renderTable(lines, keyBase) {
+  const rows = lines.filter(l => !l.match(/^\|[\s\-|]+\|$/));
+  const cells = rows.map(row => row.split("|").filter((_, i, a) => i > 0 && i < a.length - 1).map(c => c.trim()));
+
+  return (
+    <div key={keyBase} style={{ overflowX: "auto", margin: "0.8rem 0" }}>
+      <table style={{ borderCollapse: "collapse", width: "100%", fontSize: "0.9rem" }}>
+        <tbody>
+          {cells.map((row, ri) => (
+            <tr key={ri} style={{ background: ri === 0 ? "#2d6a4f" : ri % 2 === 0 ? "#f0faf4" : "white" }}>
+              {row.map((cell, ci) => {
+                const Tag = ri === 0 ? "th" : "td";
+                return <Tag key={ci} style={{ border: "1px solid #b7e4c7", padding: "0.4rem 0.7rem", color: ri === 0 ? "white" : "#1b4332", textAlign: "left", fontWeight: ri === 0 ? 600 : 400 }}>{cell}</Tag>;
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function formatDate(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit", year: "numeric" }) + " · " + d.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+}
+
+export default function DiagnosticienPedagogique() {
+  const [mode, setMode] = useState("test");
+  const [niveau, setNiveau] = useState("CP1");
+  const [niveauReel, setNiveauReel] = useState("");
+  const [domaines, setDomaines] = useState(["Lecture", "Écriture", "Mathématiques"]);
+  const [contexte, setContexte] = useState("");
+  const [resultats, setResultats] = useState("");
+  const [lacunes, setLacunes] = useState("");
+  const [output, setOutput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [history, setHistory] = useState([]);
+  const [showHistory, setShowHistory] = useState(false);
+  const [historyLoaded, setHistoryLoaded] = useState(false);
+  const printRef = useRef(null);
+
+  // Load history on mount
+  useEffect(() => {
+    (async () => {
+      try {
+        const result = await window.storage.get(HISTORY_KEY, false);
+        if (result && result.value) {
+          const parsed = JSON.parse(result.value);
+          setHistory(Array.isArray(parsed) ? parsed : []);
+        }
+      } catch (e) {
+        // No history yet, that's fine
+      } finally {
+        setHistoryLoaded(true);
+      }
+    })();
+  }, []);
+
+  const saveToHistory = async (entry) => {
+    try {
+      const updated = [entry, ...history].slice(0, MAX_HISTORY);
+      setHistory(updated);
+      await window.storage.set(HISTORY_KEY, JSON.stringify(updated), false);
+    } catch (e) {
+      // Silent fail — history is a convenience feature
+    }
+  };
+
+  const deleteHistoryItem = async (id) => {
+    try {
+      const updated = history.filter(h => h.id !== id);
+      setHistory(updated);
+      await window.storage.set(HISTORY_KEY, JSON.stringify(updated), false);
+    } catch (e) {
+      // Silent fail
+    }
+  };
+
+  const clearHistory = async () => {
+    try {
+      setHistory([]);
+      await window.storage.set(HISTORY_KEY, JSON.stringify([]), false);
+    } catch (e) {
+      // Silent fail
+    }
+  };
+
+  const loadFromHistory = (entry) => {
+    setMode(entry.mode);
+    setNiveau(entry.niveau);
+    setNiveauReel(entry.niveauReel || "");
+    setDomaines(entry.domaines || ["Lecture", "Écriture", "Mathématiques"]);
+    setContexte(entry.contexte || "");
+    setResultats(entry.resultats || "");
+    setLacunes(entry.lacunes || "");
+    setOutput(entry.output);
+    setShowHistory(false);
+    setError("");
+  };
+
+  const toggleDomaine = (d) => {
+    setDomaines(prev => prev.includes(d) ? prev.filter(x => x !== d) : [...prev, d]);
+  };
+
+  const buildPrompt = () => {
+    const domainesStr = domaines.join(", ");
+    const niveauReelStr = niveauReel ? ` (niveau réel supposé : ${niveauReel})` : "";
+
+    if (mode === "test") {
+      return `Génère un TEST DIAGNOSTIQUE COMPLET pour un élève de ${niveau}${niveauReelStr}.
+
+Domaines à évaluer : ${domainesStr}
+${contexte ? `Contexte particulier : ${contexte}` : ""}
+
+Produis dans l'ordre :
+1. TEST COMPLET (exercices numérotés, consignes claires, espaces réponse)
+2. GRILLE DE CORRECTION (critères précis par exercice)
+3. BARÈME DÉTAILLÉ (points par item)
+4. TABLEAU DE SYNTHÈSE (compétences évaluées / points / seuils d'acquisition)
+
+Utilise des prénoms guinéens et des contextes locaux. Sois précis et directement utilisable par un enseignant.`;
+    }
+
+    if (mode === "correction") {
+      return `Analyse les résultats suivants d'un élève de ${niveau}${niveauReelStr} :
+
+Résultats obtenus : ${resultats || "(non précisés — produis une grille d'analyse type)"}
+${lacunes ? `Difficultés observées : ${lacunes}` : ""}
+
+Produis :
+1. COMPÉTENCES MAÎTRISÉES (liste détaillée)
+2. COMPÉTENCES FRAGILES (liste détaillée)
+3. COMPÉTENCES NON ACQUISES (liste détaillée)
+4. ANALYSE DES ERREURS (lecture, écriture, mathématiques selon les domaines concernés)
+5. HYPOTHÈSES PÉDAGOGIQUES (causes probables des difficultés)
+6. PLAN DE REMÉDIATION (objectif / activités / durée / fréquence / indicateurs de réussite)
+
+Note : Ceci n'est pas un diagnostic médical.`;
+    }
+
+    if (mode === "remediation") {
+      return `Génère un PLAN DE REMÉDIATION DÉTAILLÉ pour un élève de ${niveau}${niveauReelStr}.
+
+Domaines ciblés : ${domainesStr}
+${lacunes ? `Lacunes identifiées : ${lacunes}` : ""}
+${contexte ? `Contexte : ${contexte}` : ""}
+
+Pour chaque compétence à remédier, produis :
+- Objectif précis
+- 3 à 5 activités progressives avec consignes détaillées
+- Matériel nécessaire (adapté au contexte guinéen)
+- Durée et fréquence recommandées
+- Indicateurs de réussite mesurables
+- Critères de passage à l'étape suivante
+
+Utilise des prénoms et contextes guinéens. Sois directement applicable en classe.`;
+    }
+  };
+
+  const generate = async () => {
+    if (domaines.length === 0) { setError("Sélectionnez au moins un domaine."); return; }
+    setError("");
+    setOutput("");
+    setLoading(true);
+
+    try {
+      const response = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-6",
+          max_tokens: 1000,
+          system: systemPrompt,
+          messages: [{ role: "user", content: buildPrompt() }],
+        }),
+      });
+
+      const data = await response.json();
+      const text = data.content?.map(b => b.text || "").join("\n") || "";
+      setOutput(text);
+
+      // Save to history
+      const entry = {
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        date: new Date().toISOString(),
+        mode, niveau, niveauReel, domaines, contexte, resultats, lacunes,
+        output: text,
+      };
+      saveToHistory(entry);
+    } catch (e) {
+      setError("Erreur de connexion. Vérifiez votre accès à l'API.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const exportPDF = () => {
+    window.print();
+  };
+
+  const colors = { bg: "#f0faf4", card: "#ffffff", primary: "#2d6a4f", accent: "#52b788", light: "#d8f3dc", dark: "#1b4332", muted: "#74c69d" };
+
+  return (
+    <div style={{ minHeight: "100vh", background: colors.bg, fontFamily: "'Segoe UI', system-ui, sans-serif", color: colors.dark }}>
+      {/* Print styles */}
+      <style>{`
+        @media print {
+          body * { visibility: hidden; }
+          #printable-output, #printable-output * { visibility: visible; }
+          #printable-output {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem;
+            box-shadow: none !important;
+            border: none !important;
+          }
+          #printable-output .no-print { display: none !important; }
+        }
+      `}</style>
+
+      {/* Header */}
+      <div className="no-print" style={{ background: colors.primary, color: "white", padding: "1.5rem 2rem", boxShadow: "0 2px 12px rgba(0,0,0,0.15)" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "0.6rem" }}>
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", marginBottom: "0.3rem" }}>
+              <span style={{ fontSize: "1.8rem" }}>🎓</span>
+              <h1 style={{ margin: 0, fontSize: "1.4rem", fontWeight: 700, letterSpacing: "-0.01em" }}>Diagnosticien Pédagogique Expert</h1>
+            </div>
+            <p style={{ margin: 0, fontSize: "0.88rem", opacity: 0.85 }}>Évaluation diagnostique CP1 → CM2 · Programmes guinéens INRAP</p>
+          </div>
+          <button onClick={() => setShowHistory(s => !s)}
+            style={{ background: showHistory ? "white" : "rgba(255,255,255,0.15)", color: showHistory ? colors.primary : "white", border: "1.5px solid rgba(255,255,255,0.4)", borderRadius: 8, padding: "0.5rem 0.9rem", fontSize: "0.85rem", fontWeight: 600, cursor: "pointer", whiteSpace: "nowrap" }}>
+            🕘 Historique {history.length > 0 ? `(${history.length})` : ""}
+          </button>
         </div>
-    </section>
+      </div>
 
-    <section id="profs">
-        <h2>Nos Précepteurs</h2>
-        <p style="color: #4a5568; margin-bottom: 30px; font-size: 1.1rem;">Découvrez les profils et les compétences des tuteurs d'excellence de notre programme.</p>
-        
-        <div class="precepteurs-grid">
-            <div class="tutor-card">
-                <img src="image/primaire.png" alt="Soutien Primaire">
-                <h3>M. Diallo</h3>
-                <div class="tutor-matiere">Niveau Primaire</div>
-                <p class="tutor-cv"><strong>Spécialité :</strong> Maîtrise des programmes fondamentaux, renforcement en lecture, calcul et écriture. Idéal pour donner de bonnes habitudes d'organisation dès le départ.</p>
+      <div style={{ maxWidth: 900, margin: "0 auto", padding: "1.5rem 1rem" }}>
+
+        {/* History panel */}
+        {showHistory && (
+          <div className="no-print" style={{ background: "white", borderRadius: 12, padding: "1.2rem 1.4rem", marginBottom: "1.2rem", boxShadow: "0 1px 6px rgba(0,0,0,0.07)" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.8rem" }}>
+              <h2 style={{ margin: 0, fontSize: "1rem", fontWeight: 700, color: colors.primary }}>Évaluations précédentes</h2>
+              {history.length > 0 && (
+                <button onClick={clearHistory}
+                  style={{ fontSize: "0.78rem", padding: "0.3rem 0.6rem", borderRadius: 6, border: `1px solid #f5c2c7`, background: "#fff5f5", color: "#c0392b", cursor: "pointer" }}>
+                  🗑 Tout effacer
+                </button>
+              )}
             </div>
 
-            <div class="tutor-card">
-                <img src="image/enseignante.png" alt="Enseignante d'Excellence">
-                <h3>Mme Camara</h3>
-                <div class="tutor-matiere">Français & Histoire</div>
-                <p class="tutor-cv"><strong>Spécialité :</strong> Enseignante certifiée, spécialiste du développement de la méthodologie et de la confiance en soi pour surmonter les blocages scolaires.</p>
+            {!historyLoaded && <p style={{ fontSize: "0.88rem", color: "#888" }}>Chargement…</p>}
+            {historyLoaded && history.length === 0 && (
+              <p style={{ fontSize: "0.88rem", color: "#888" }}>Aucune évaluation enregistrée pour le moment. Générez un test pour commencer.</p>
+            )}
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              {history.map(h => (
+                <div key={h.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", border: `1px solid ${colors.light}`, borderRadius: 8, padding: "0.6rem 0.8rem", gap: "0.6rem" }}>
+                  <div style={{ flex: 1, minWidth: 0, cursor: "pointer" }} onClick={() => loadFromHistory(h)}>
+                    <div style={{ fontWeight: 600, fontSize: "0.88rem", color: colors.dark }}>
+                      {MODES.find(m => m.id === h.mode)?.icon} {MODES.find(m => m.id === h.mode)?.label} · {h.niveau}{h.niveauReel ? ` (réel: ${h.niveauReel})` : ""}
+                    </div>
+                    <div style={{ fontSize: "0.76rem", color: "#888" }}>{formatDate(h.date)} · {h.domaines?.join(", ")}</div>
+                  </div>
+                  <button onClick={() => deleteHistoryItem(h.id)}
+                    style={{ border: "none", background: "transparent", color: "#c0392b", cursor: "pointer", fontSize: "1rem", padding: "0.2rem" }}
+                    title="Supprimer">✕</button>
+                </div>
+              ))}
             </div>
+          </div>
+        )}
 
-            <div class="tutor-card">
-                <img src="image/collège lycee.png" alt="Soutien Collège et Lycée">
-                <h3>M. Sow</h3>
-                <div class="tutor-matiere">Maths & Physique</div>
-                <p class="tutor-cv"><strong>Spécialité :</strong> Préparation intensive aux brevets et examens nationaux. Suivi rigoureux pour les filières scientifiques au Collège et au Lycée.</p>
+        {/* Mode selector */}
+        <div className="no-print" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.7rem", marginBottom: "1.5rem" }}>
+          {MODES.map(m => (
+            <button key={m.id} onClick={() => { setMode(m.id); setOutput(""); }}
+              style={{ background: mode === m.id ? colors.primary : "white", color: mode === m.id ? "white" : colors.dark, border: `2px solid ${mode === m.id ? colors.primary : colors.light}`, borderRadius: 10, padding: "0.8rem 0.6rem", cursor: "pointer", textAlign: "left", transition: "all 0.15s" }}>
+              <div style={{ fontSize: "1.3rem", marginBottom: "0.25rem" }}>{m.icon}</div>
+              <div style={{ fontWeight: 600, fontSize: "0.88rem" }}>{m.label}</div>
+              <div style={{ fontSize: "0.77rem", opacity: 0.75, marginTop: "0.15rem" }}>{m.desc}</div>
+            </button>
+          ))}
+        </div>
+
+        {/* Config panel */}
+        <div className="no-print" style={{ background: "white", borderRadius: 12, padding: "1.2rem 1.4rem", marginBottom: "1.2rem", boxShadow: "0 1px 6px rgba(0,0,0,0.07)" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
+            <div>
+              <label style={{ fontSize: "0.82rem", fontWeight: 600, color: colors.primary, display: "block", marginBottom: "0.3rem" }}>Niveau scolaire officiel</label>
+              <select value={niveau} onChange={e => setNiveau(e.target.value)}
+                style={{ width: "100%", padding: "0.55rem 0.7rem", borderRadius: 8, border: `1.5px solid ${colors.light}`, fontSize: "0.95rem", color: colors.dark, background: "white" }}>
+                {NIVEAUX.map(n => <option key={n}>{n}</option>)}
+              </select>
             </div>
-        </div>
-    </section>
+            <div>
+              <label style={{ fontSize: "0.82rem", fontWeight: 600, color: colors.primary, display: "block", marginBottom: "0.3rem" }}>Niveau réel supposé <span style={{ fontWeight: 400, opacity: 0.7 }}>(optionnel)</span></label>
+              <select value={niveauReel} onChange={e => setNiveauReel(e.target.value)}
+                style={{ width: "100%", padding: "0.55rem 0.7rem", borderRadius: 8, border: `1.5px solid ${colors.light}`, fontSize: "0.95rem", color: colors.dark, background: "white" }}>
+                <option value="">— Même que le niveau officiel</option>
+                {NIVEAUX.map(n => <option key={n}>{n}</option>)}
+              </select>
+            </div>
+          </div>
 
-    <section id="zone" class="zone">
-        <div class="zone-text">
-            <h2>Notre Zone d'intervention</h2>
-            <p style="font-size: 1.2rem; color: #4a5568; margin-bottom: 15px;">📍 Un précepteur se déplace directement chez vous, où que vous soyez : du centre-ville de <strong>Conakry</strong>, jusqu'à <strong>Dubréka</strong> et <strong>Coyah</strong>.</p>
-            <p style="font-size: 1.1rem; font-style: italic; color: #dd6b20;">« À domicile, l'apprentissage devient plus humain, plus proche, plus efficace. »</p>
-        </div>
-        <div class="zone-image">
-            <img src="image/carte.png" alt="Carte de zone d'intervention">
-        </div>
-    </section>
+          {/* Domaines */}
+          <div style={{ marginBottom: "1rem" }}>
+            <label style={{ fontSize: "0.82rem", fontWeight: 600, color: colors.primary, display: "block", marginBottom: "0.4rem" }}>Domaines à évaluer</label>
+            <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+              {["Lecture", "Écriture", "Mathématiques"].map(d => (
+                <button key={d} onClick={() => toggleDomaine(d)}
+                  style={{ padding: "0.35rem 0.85rem", borderRadius: 20, border: `1.5px solid ${domaines.includes(d) ? colors.primary : colors.light}`, background: domaines.includes(d) ? colors.light : "white", color: domaines.includes(d) ? colors.primary : "#888", fontWeight: domaines.includes(d) ? 600 : 400, fontSize: "0.88rem", cursor: "pointer" }}>
+                  {d}
+                </button>
+              ))}
+            </div>
+          </div>
 
-    <footer>
-        <p>Besoin d'un accompagnement sur-mesure pour votre enfant ?</p>
-        <div class="boutons-footer">
-            <a href="tel:+224620158426" class="btn-appel-bot">📞 APPELER (+224 620 15 84 26)</a>
-            <a href="https://www.facebook.com/share/1CsK9DFUVD/" target="_blank" class="btn-facebook">🔵 Notre page Facebook</a>
-        </div>
-    </footer>
+          {/* Résultats / lacunes selon le mode */}
+          {mode === "correction" && (
+            <div style={{ marginBottom: "0.8rem" }}>
+              <label style={{ fontSize: "0.82rem", fontWeight: 600, color: colors.primary, display: "block", marginBottom: "0.3rem" }}>Résultats obtenus <span style={{ fontWeight: 400, opacity: 0.7 }}>(scores, observations)</span></label>
+              <textarea value={resultats} onChange={e => setResultats(e.target.value)} rows={3}
+                placeholder="Ex : Lecture 12/40 — ne décode pas les syllabes complexes. Maths 18/30. Écriture 8/30..."
+                style={{ width: "100%", padding: "0.55rem 0.7rem", borderRadius: 8, border: `1.5px solid ${colors.light}`, fontSize: "0.9rem", resize: "vertical", boxSizing: "border-box" }} />
+            </div>
+          )}
 
-</body>
-</html>
+          {(mode === "correction" || mode === "remediation") && (
+            <div style={{ marginBottom: "0.8rem" }}>
+              <label style={{ fontSize: "0.82rem", fontWeight: 600, color: colors.primary, display: "block", marginBottom: "0.3rem" }}>Difficultés / lacunes identifiées <span style={{ fontWeight: 400, opacity: 0.7 }}>(optionnel)</span></label>
+              <textarea value={lacunes} onChange={e => setLacunes(e.target.value)} rows={2}
+                placeholder="Ex : confusion b/d, ne mémorise pas les tables, inversions en écriture..."
+                style={{ width: "100%", padding: "0.55rem 0.7rem", borderRadius: 8, border: `1.5px solid ${colors.light}`, fontSize: "0.9rem", resize: "vertical", boxSizing: "border-box" }} />
+            </div>
+          )}
+
+          <div>
+            <label style={{ fontSize: "0.82rem", fontWeight: 600, color: colors.primary, display: "block", marginBottom: "0.3rem" }}>Contexte particulier <span style={{ fontWeight: 400, opacity: 0.7 }}>(optionnel)</span></label>
+            <input value={contexte} onChange={e => setContexte(e.target.value)}
+              placeholder="Ex : élève en zone rurale, absence prolongée, primo-arrivant..."
+              style={{ width: "100%", padding: "0.55rem 0.7rem", borderRadius: 8, border: `1.5px solid ${colors.light}`, fontSize: "0.9rem", boxSizing: "border-box" }} />
+          </div>
+        </div>
+
+        {/* CTA */}
+        {error && <div className="no-print" style={{ background: "#fff0f0", border: "1px solid #fcc", borderRadius: 8, padding: "0.6rem 1rem", marginBottom: "0.8rem", fontSize: "0.88rem", color: "#c0392b" }}>{error}</div>}
+
+        <button className="no-print" onClick={generate} disabled={loading}
+          style={{ width: "100%", padding: "0.9rem", borderRadius: 10, border: "none", background: loading ? colors.muted : colors.primary, color: "white", fontSize: "1rem", fontWeight: 700, cursor: loading ? "not-allowed" : "pointer", transition: "background 0.15s", marginBottom: "1.5rem" }}>
+          {loading ? "⏳ Génération en cours…" : MODES.find(m => m.id === mode)?.icon + " " + MODES.find(m => m.id === mode)?.label}
+        </button>
+
+        {/* Output */}
+        {output && (
+          <div id="printable-output" ref={printRef} style={{ background: "white", borderRadius: 12, padding: "1.5rem 1.6rem", boxShadow: "0 1px 6px rgba(0,0,0,0.07)", borderLeft: `4px solid ${colors.accent}` }}>
+            <div className="no-print" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "0.5rem" }}>
+              <span style={{ fontSize: "0.82rem", fontWeight: 600, color: colors.accent, textTransform: "uppercase", letterSpacing: "0.05em" }}>Résultat généré</span>
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                <button onClick={() => navigator.clipboard?.writeText(output)}
+                  style={{ fontSize: "0.8rem", padding: "0.3rem 0.7rem", borderRadius: 6, border: `1px solid ${colors.light}`, background: "white", color: colors.primary, cursor: "pointer" }}>
+                  📋 Copier
+                </button>
+                <button onClick={exportPDF}
+                  style={{ fontSize: "0.8rem", padding: "0.3rem 0.7rem", borderRadius: 6, border: `1px solid ${colors.light}`, background: "white", color: colors.primary, cursor: "pointer" }}>
+                  📄 Exporter PDF
+                </button>
+              </div>
+            </div>
+            <MarkdownRenderer text={output} />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
